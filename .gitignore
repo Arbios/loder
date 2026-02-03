@@ -1,0 +1,15 @@
+# Build output
+Loder.app/
+build/
+DerivedData/
+
+# Xcode
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+
+# macOS
+.DS_Store
+
+# Debug logs
+*.log
