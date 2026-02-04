@@ -175,13 +175,32 @@ xcrun notarytool store-credentials "loder-notarization" \
 
 App-Specific Password создаётся на [appleid.apple.com](https://appleid.apple.com) → Sign-In and Security → App-Specific Passwords.
 
-## Запуск сервера (на kedicode)
+## Сервер (Docker на kedicode)
+
+Сервер запущен в Docker контейнере:
 
 ```bash
-cd /root/loder-server
-pip install -r requirements.txt
-gunicorn -w 2 -b 127.0.0.1:5000 app:app
+# Расположение
+/root/containers/loder/
+
+# Управление
+ssh kedicode
+cd /root/containers/loder
+docker-compose up -d      # Запуск
+docker-compose down       # Остановка
+docker-compose logs -f    # Логи
+docker-compose build      # Пересборка
+
+# Данные хранятся в Docker volume
+docker volume inspect loder_data
 ```
+
+### Структура контейнеров на сервере
+
+| Домен | Контейнер | Порт |
+|-------|-----------|------|
+| loder.kedicode.cloud | loder | 5000 |
+| kedicode.cloud | (host) | - |
 
 ## Зависимости
 

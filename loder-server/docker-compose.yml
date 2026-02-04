@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  loder:
+    build: .
+    container_name: loder
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - loder_data:/app/data
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_PATH=/app/data/loder.db
+      - AVATARS_DIR=/app/data/avatars
+      - DATA_DIR=/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  loder_data:
+    name: loder_data

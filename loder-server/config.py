@@ -1,7 +1,8 @@
 import os
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_PATH = os.path.join(BASE_DIR, 'loder.db')
-AVATARS_DIR = os.path.join(BASE_DIR, 'avatars')
+DATA_DIR = os.environ.get('DATA_DIR', BASE_DIR)
+DATABASE_PATH = os.environ.get('DATABASE_PATH', os.path.join(DATA_DIR, 'loder.db'))
+AVATARS_DIR = os.environ.get('AVATARS_DIR', os.path.join(DATA_DIR, 'avatars'))
 MAX_AVATAR_SIZE = 1 * 1024 * 1024  # 1MB
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}

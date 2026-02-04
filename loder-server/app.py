@@ -70,8 +70,8 @@ DEBUG_HTML = '''
                     <span class="badge {{ 'online' if m.is_online else 'offline' }}">
                         {{ 'ONLINE' if m.is_online else 'OFFLINE' }}
                     </span>
-                    <span class="badge {{ 'active' if m.is_active else 'inactive' }}">
-                        {{ '🔥 ACTIVE' if m.is_active else '💤 INACTIVE' }}
+                    <span class="badge {{ 'active' if m.active_app else 'inactive' }}">
+                        {{ m.active_app if m.active_app else '💤 Idle' }}
                     </span>
                 </div>
                 <div class="user-id">{{ m.user_id }}</div>
@@ -104,7 +104,7 @@ def debug_room(room_id):
     # Get members
     threshold = datetime.utcnow() - timedelta(seconds=15)
     cursor.execute('''
-        SELECT u.id as user_id, u.avatar_path, rm.is_active, rm.last_seen
+        SELECT u.id as user_id, u.avatar_path, rm.active_app, rm.last_seen
         FROM room_members rm
         JOIN users u ON rm.user_id = u.id
         WHERE rm.room_id = ?
@@ -117,7 +117,7 @@ def debug_room(room_id):
         members.append({
             'user_id': row['user_id'],
             'avatar_path': row['avatar_path'],
-            'is_active': bool(row['is_active']) if is_online else False,
+            'active_app': row['active_app'] if is_online else None,
             'is_online': is_online,
             'last_seen': row['last_seen']
         })
