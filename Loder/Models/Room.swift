@@ -13,11 +13,3 @@ struct Room: Codable, Identifiable {
         case members
     }
 }
-
-struct CreateRoomResponse: Codable {
-    let roomId: String
-}
-
-struct JoinRoomResponse: Codable {
-    let message: String
-}

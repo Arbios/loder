@@ -23,6 +23,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS rooms (
             id TEXT PRIMARY KEY,
             created_by TEXT NOT NULL,
+            password TEXT,
+            max_members INTEGER DEFAULT 10,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (created_by) REFERENCES users(id)
         )
@@ -38,6 +40,26 @@ def init_db():
             FOREIGN KEY (room_id) REFERENCES rooms(id),
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
+    ''')
+
+    # Activity logs for statistics
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS activity_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            room_id TEXT NOT NULL,
+            user_id TEXT NOT NULL,
+            app_name TEXT NOT NULL,
+            duration_seconds INTEGER DEFAULT 5,
+            logged_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (room_id) REFERENCES rooms(id),
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    ''')
+
+    # Index for faster stats queries
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_activity_logs_room_user
+        ON activity_logs(room_id, user_id, logged_at)
     ''')
 
     conn.commit()

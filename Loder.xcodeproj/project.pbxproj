@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A1000001211E00001 /* LoderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002211E00001 /* LoderApp.swift */; };
-		A1000003211E00001 /* ClaudeActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004211E00001 /* ClaudeActivityMonitor.swift */; };
+		A1000003211E00001 /* ActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004211E00001 /* ActivityMonitor.swift */; };
 		A1000014211E00001 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842F5AFF2F32A55A0075EE5F /* Media.xcassets */; };
 		B1000001211E00001 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002211E00001 /* User.swift */; };
 		B1000003211E00001 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004211E00001 /* Room.swift */; };
@@ -27,12 +27,14 @@
 		B100001D211E00001 /* AvatarUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100001E211E00001 /* AvatarUploadView.swift */; };
 		B100001F211E00001 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000020211E00001 /* AvatarView.swift */; };
 		B1000021211E00001 /* AvatarStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000022211E00001 /* AvatarStackView.swift */; };
+		C1000001211E00001 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000002211E00001 /* Statistics.swift */; };
+		C1000003211E00001 /* StatisticsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004211E00001 /* StatisticsWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		842F5AFF2F32A55A0075EE5F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		A1000002211E00001 /* LoderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoderApp.swift; sourceTree = "<group>"; };
-		A1000004211E00001 /* ClaudeActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeActivityMonitor.swift; sourceTree = "<group>"; };
+		A1000004211E00001 /* ActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityMonitor.swift; sourceTree = "<group>"; };
 		A1000005211E00001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000006211E00001 /* Loder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1000002211E00001 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -52,6 +54,8 @@
 		B100001E211E00001 /* AvatarUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarUploadView.swift; sourceTree = "<group>"; };
 		B1000020211E00001 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		B1000022211E00001 /* AvatarStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStackView.swift; sourceTree = "<group>"; };
+		C1000002211E00001 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		C1000004211E00001 /* StatisticsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				A1000002211E00001 /* LoderApp.swift */,
-				A1000004211E00001 /* ClaudeActivityMonitor.swift */,
+				A1000004211E00001 /* ActivityMonitor.swift */,
 				B1000023211E00001 /* Models */,
 				B1000024211E00001 /* Services */,
 				B1000025211E00001 /* Views */,
@@ -102,6 +106,7 @@
 				B1000002211E00001 /* User.swift */,
 				B1000004211E00001 /* Room.swift */,
 				B1000006211E00001 /* Participant.swift */,
+				C1000002211E00001 /* Statistics.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 				B100001E211E00001 /* AvatarUploadView.swift */,
 				B1000020211E00001 /* AvatarView.swift */,
 				B1000022211E00001 /* AvatarStackView.swift */,
+				C1000004211E00001 /* StatisticsWindow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,7 +217,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1000001211E00001 /* LoderApp.swift in Sources */,
-				A1000003211E00001 /* ClaudeActivityMonitor.swift in Sources */,
+				A1000003211E00001 /* ActivityMonitor.swift in Sources */,
 				B1000001211E00001 /* User.swift in Sources */,
 				B1000003211E00001 /* Room.swift in Sources */,
 				B1000005211E00001 /* Participant.swift in Sources */,
@@ -229,6 +235,8 @@
 				B100001D211E00001 /* AvatarUploadView.swift in Sources */,
 				B100001F211E00001 /* AvatarView.swift in Sources */,
 				B1000021211E00001 /* AvatarStackView.swift in Sources */,
+				C1000001211E00001 /* Statistics.swift in Sources */,
+				C1000003211E00001 /* StatisticsWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,10 +19,17 @@ struct RoomView: View {
 
                 Spacer()
 
+                Button(action: openStatistics) {
+                    Image(systemName: "chart.bar.fill")
+                }
+                .buttonStyle(.borderless)
+                .help("View Statistics")
+
                 Button(action: copyRoomCode) {
                     Image(systemName: showCopied ? "checkmark" : "doc.on.doc")
                 }
                 .buttonStyle(.borderless)
+                .help("Copy Room Code")
             }
             .padding(.horizontal)
 
@@ -114,6 +121,11 @@ struct RoomView: View {
                 NSApplication.shared.terminate(nil)
             }
         }
+    }
+
+    private func openStatistics() {
+        guard let roomId = appState.currentRoom?.id else { return }
+        StatisticsWindowController.shared.showStatistics(for: roomId)
     }
 }
 
