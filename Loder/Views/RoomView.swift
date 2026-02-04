@@ -163,10 +163,19 @@ struct ParticipantRow: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    if participant.isInFocusMode {
+                        Image(systemName: "eye.slash.fill")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                    }
                 }
 
                 if participant.isOnline {
-                    if let app = participant.activeApp {
+                    if participant.isInFocusMode {
+                        Text("Focus Mode")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                    } else if let app = participant.activeApp {
                         Text(app)
                             .font(.caption)
                             .foregroundColor(.green)

@@ -119,3 +119,47 @@ def get_avatar(user_id):
         return jsonify({'error': 'Avatar file not found'}), 404
 
     return send_file(filepath)
+
+
+@users_bp.route('/<user_id>', methods=['DELETE'])
+def delete_account(user_id):
+    """Delete user account and anonymize their data"""
+    conn = get_db()
+    cursor = conn.cursor()
+
+    # Check if user exists
+    cursor.execute('SELECT id, avatar_path FROM users WHERE id = ?', (user_id,))
+    user = cursor.fetchone()
+    if not user:
+        conn.close()
+        return jsonify({'error': 'User not found'}), 404
+
+    # Delete avatar file if exists
+    if user['avatar_path']:
+        filepath = os.path.join(AVATARS_DIR, user['avatar_path'])
+        if os.path.exists(filepath):
+            try:
+                os.remove(filepath)
+            except:
+                pass
+
+    # Generate anonymous ID for data preservation
+    anon_id = f"deleted_{uuid.uuid4().hex[:8]}"
+
+    # Anonymize activity logs (keep data but remove user identity)
+    cursor.execute('''
+        UPDATE activity_logs
+        SET user_id = ?
+        WHERE user_id = ?
+    ''', (anon_id, user_id))
+
+    # Remove from all rooms
+    cursor.execute('DELETE FROM room_members WHERE user_id = ?', (user_id,))
+
+    # Delete user account
+    cursor.execute('DELETE FROM users WHERE id = ?', (user_id,))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({'message': 'Account deleted and data anonymized'})

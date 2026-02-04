@@ -17,6 +17,7 @@ class AppState: ObservableObject {
     @Published var activeApp: String? = nil  // nil = idle, String = app name
     @Published var isLoading: Bool = false
     @Published var errorMessage: String?
+    @Published var focusMode: Bool = false  // Hide status from others
 
     private init() {
         loadStoredUser()
@@ -28,6 +29,7 @@ class AppState: ObservableObject {
             let avatarPath = UserDefaults.standard.string(forKey: "com.loder.avatarPath")
             self.currentUser = User(id: userId, deviceId: deviceId, avatarPath: avatarPath, isNew: false)
             self.status = .lobby
+            self.focusMode = UserDefaults.standard.bool(forKey: "com.loder.focusMode")
 
             // Check for stored room
             if let roomId = UserDefaults.standard.string(forKey: "com.loder.roomId") {
@@ -78,9 +80,16 @@ class AppState: ObservableObject {
         currentRoom = nil
         participants = []
         status = .unregistered
+        focusMode = false
         UserDefaults.standard.removeObject(forKey: "com.loder.userId")
         UserDefaults.standard.removeObject(forKey: "com.loder.deviceId")
         UserDefaults.standard.removeObject(forKey: "com.loder.avatarPath")
         UserDefaults.standard.removeObject(forKey: "com.loder.roomId")
+        UserDefaults.standard.removeObject(forKey: "com.loder.focusMode")
+    }
+
+    func setFocusMode(_ enabled: Bool) {
+        self.focusMode = enabled
+        UserDefaults.standard.set(enabled, forKey: "com.loder.focusMode")
     }
 }

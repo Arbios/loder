@@ -196,6 +196,7 @@ def heartbeat(room_id):
 
     user_id = data['userId']
     active_app = data.get('activeApp')  # None = idle, String = app name
+    focus_mode = data.get('focusMode', False)  # Focus mode hides status
 
     conn = get_db()
     cursor = conn.cursor()
@@ -209,16 +210,16 @@ def heartbeat(room_id):
         conn.close()
         return jsonify({'error': 'Not a member of this room'}), 403
 
-    # Update heartbeat
+    # Update heartbeat with focus mode
     now = datetime.utcnow()
     cursor.execute('''
         UPDATE room_members
-        SET active_app = ?, last_seen = ?
+        SET active_app = ?, last_seen = ?, focus_mode = ?
         WHERE room_id = ? AND user_id = ?
-    ''', (active_app, now, room_id, user_id))
+    ''', (active_app, now, focus_mode, room_id, user_id))
 
-    # Log activity for statistics (only if user is active in an app)
-    if active_app:
+    # Log activity for statistics (only if user is active in an app and not in focus mode)
+    if active_app and not focus_mode:
         cursor.execute('''
             INSERT INTO activity_logs (room_id, user_id, app_name, duration_seconds, logged_at)
             VALUES (?, ?, ?, ?, ?)
@@ -229,7 +230,7 @@ def heartbeat(room_id):
     # Get all members with online status
     threshold = now - timedelta(seconds=OFFLINE_THRESHOLD_SECONDS)
     cursor.execute('''
-        SELECT u.id, u.avatar_path, rm.active_app, rm.last_seen
+        SELECT u.id, u.avatar_path, rm.active_app, rm.last_seen, rm.focus_mode
         FROM room_members rm
         JOIN users u ON rm.user_id = u.id
         WHERE rm.room_id = ?
@@ -239,11 +240,13 @@ def heartbeat(room_id):
     for row in cursor.fetchall():
         last_seen = datetime.fromisoformat(row['last_seen']) if row['last_seen'] else None
         is_online = bool(last_seen and last_seen > threshold)
+        is_focus = bool(row['focus_mode']) if row['focus_mode'] is not None else False
         members.append({
             'userId': row['id'],
             'avatarPath': row['avatar_path'],
-            'activeApp': row['active_app'] if is_online else None,
-            'isOnline': is_online
+            'activeApp': None if is_focus else (row['active_app'] if is_online else None),
+            'isOnline': is_online,
+            'focusMode': is_focus
         })
 
     conn.close()

@@ -29,6 +29,7 @@
 		B1000021211E00001 /* AvatarStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000022211E00001 /* AvatarStackView.swift */; };
 		C1000001211E00001 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000002211E00001 /* Statistics.swift */; };
 		C1000003211E00001 /* StatisticsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004211E00001 /* StatisticsWindow.swift */; };
+		D1000001211E00001 /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000002211E00001 /* SettingsWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		B1000022211E00001 /* AvatarStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStackView.swift; sourceTree = "<group>"; };
 		C1000002211E00001 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		C1000004211E00001 /* StatisticsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsWindow.swift; sourceTree = "<group>"; };
+		D1000002211E00001 /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 				B1000020211E00001 /* AvatarView.swift */,
 				B1000022211E00001 /* AvatarStackView.swift */,
 				C1000004211E00001 /* StatisticsWindow.swift */,
+				D1000002211E00001 /* SettingsWindow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				B1000021211E00001 /* AvatarStackView.swift in Sources */,
 				C1000001211E00001 /* Statistics.swift in Sources */,
 				C1000003211E00001 /* StatisticsWindow.swift in Sources */,
+				D1000001211E00001 /* SettingsWindow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -36,11 +36,18 @@ def init_db():
             user_id TEXT NOT NULL,
             active_app TEXT,
             last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            focus_mode BOOLEAN DEFAULT 0,
             PRIMARY KEY (room_id, user_id),
             FOREIGN KEY (room_id) REFERENCES rooms(id),
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
+
+    # Add focus_mode column if it doesn't exist (migration for existing DBs)
+    try:
+        cursor.execute('ALTER TABLE room_members ADD COLUMN focus_mode BOOLEAN DEFAULT 0')
+    except:
+        pass  # Column already exists
 
     # Activity logs for statistics
     cursor.execute('''

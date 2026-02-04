@@ -29,6 +29,7 @@ class HeartbeatService {
         }
 
         let activeApp = AppState.shared.activeApp
+        let focusMode = AppState.shared.focusMode
 
         Task {
             do {
@@ -36,6 +37,8 @@ class HeartbeatService {
                 if let app = activeApp {
                     body["activeApp"] = app
                 }
+                // Send focus mode status
+                body["focusMode"] = focusMode
 
                 let response: HeartbeatResponse = try await api.request(
                     endpoint: "/rooms/\(roomId)/heartbeat",

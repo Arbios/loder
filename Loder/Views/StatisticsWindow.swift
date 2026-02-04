@@ -21,44 +21,78 @@ struct StatisticsWindow: View {
             )
             .ignoresSafeArea()
 
-            if isLoading {
-                LoadingView()
-            } else if let stats = stats {
-                ScrollView {
-                    VStack(spacing: 24) {
-                        // Header
-                        HeaderView(roomId: roomId, period: selectedPeriod, periods: periods) { period in
-                            selectedPeriod = period
-                            loadStats()
-                        }
+            VStack(spacing: 0) {
+                // Custom title bar (draggable)
+                CustomTitleBar(onClose: {
+                    StatisticsWindowController.shared.close()
+                }, onSettings: {
+                    SettingsWindowController.shared.showSettings()
+                })
 
-                        // Top Apps Card
-                        if !stats.topApps.isEmpty {
-                            TopAppsCard(apps: stats.topApps)
-                        }
+                if isLoading {
+                    Spacer()
+                    LoadingView()
+                    Spacer()
+                } else if let stats = stats {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 24) {
+                            // Left column - Top Apps & Period selector
+                            VStack(spacing: 20) {
+                                // Header with period selector
+                                HeaderView(roomId: roomId, period: selectedPeriod, periods: periods) { period in
+                                    selectedPeriod = period
+                                    loadStats()
+                                }
 
-                        // Member Stats
-                        ForEach(stats.members) { member in
-                            MemberStatsCard(
-                                member: member,
-                                isCurrentUser: member.userId == AppState.shared.currentUser?.id,
-                                totalRoomSeconds: stats.members.reduce(0) { $0 + $1.totalSeconds }
-                            )
-                        }
+                                // Top Apps Card
+                                if !stats.topApps.isEmpty {
+                                    TopAppsCard(apps: stats.topApps)
+                                }
 
-                        // Activity Timeline
-                        if !stats.members.isEmpty {
-                            ActivityTimelineCard(members: stats.members)
+                                Spacer()
+                            }
+                            .frame(width: 320)
+
+                            // Middle column - Member Stats
+                            VStack(spacing: 16) {
+                                Text("Members")
+                                    .font(.headline)
+                                    .foregroundColor(.white.opacity(0.7))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                ForEach(stats.members) { member in
+                                    MemberStatsCard(
+                                        member: member,
+                                        isCurrentUser: member.userId == AppState.shared.currentUser?.id,
+                                        totalRoomSeconds: stats.members.reduce(0) { $0 + $1.totalSeconds }
+                                    )
+                                }
+
+                                Spacer()
+                            }
+                            .frame(width: 320)
+
+                            // Right column - Activity Timeline
+                            VStack(spacing: 16) {
+                                if !stats.members.isEmpty {
+                                    ActivityTimelineCard(members: stats.members)
+                                }
+
+                                Spacer()
+                            }
+                            .frame(width: 400)
                         }
+                        .padding(24)
                     }
-                    .padding(20)
+                } else {
+                    Spacer()
+                    Text("No data available")
+                        .foregroundColor(.white.opacity(0.6))
+                    Spacer()
                 }
-            } else {
-                Text("No data available")
-                    .foregroundColor(.white.opacity(0.6))
             }
         }
-        .frame(minWidth: 500, minHeight: 600)
+        .frame(minWidth: 900, minHeight: 500)
         .onAppear {
             loadStats()
         }
@@ -80,6 +114,71 @@ struct StatisticsWindow: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Custom Title Bar
+
+struct CustomTitleBar: View {
+    var onClose: () -> Void
+    var onSettings: () -> Void
+
+    var body: some View {
+        HStack {
+            // Close button (red)
+            Button(action: onClose) {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 12, height: 12)
+                    .overlay(
+                        Image(systemName: "xmark")
+                            .font(.system(size: 7, weight: .bold))
+                            .foregroundColor(.black.opacity(0.5))
+                    )
+            }
+            .buttonStyle(.plain)
+            .help("Close")
+
+            Spacer()
+
+            Text("Loder Statistics")
+                .font(.system(size: 13, weight: .medium))
+                .foregroundColor(.white.opacity(0.8))
+
+            Spacer()
+
+            // Settings button
+            Button(action: onSettings) {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 14))
+                    .foregroundColor(.white.opacity(0.6))
+            }
+            .buttonStyle(.plain)
+            .help("Settings")
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(0.3))
+        .background(WindowDragArea())
+    }
+}
+
+// MARK: - Window Drag Area (for frameless window)
+
+struct WindowDragArea: NSViewRepresentable {
+    func makeNSView(context: Context) -> NSView {
+        let view = DraggableView()
+        return view
+    }
+
+    func updateNSView(_ nsView: NSView, context: Context) {}
+}
+
+class DraggableView: NSView {
+    override var mouseDownCanMoveWindow: Bool { true }
+
+    override func mouseDown(with event: NSEvent) {
+        window?.performDrag(with: event)
     }
 }
 
@@ -120,37 +219,35 @@ struct HeaderView: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Room Statistics")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Room Statistics")
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundColor(.white)
 
-                    Text(roomId)
-                        .font(.system(.title3, design: .monospaced))
-                        .foregroundColor(.cyan)
-                }
+                Text(roomId)
+                    .font(.system(.body, design: .monospaced))
+                    .foregroundColor(.cyan)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
-                Spacer()
-
-                // Period Selector
-                HStack(spacing: 8) {
-                    ForEach(periods, id: \.0) { id, label in
-                        Button(action: { onPeriodChange(id) }) {
-                            Text(label)
-                                .font(.subheadline.weight(.medium))
-                                .foregroundColor(period == id ? .white : .white.opacity(0.6))
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 8)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .fill(period == id ? Color.cyan.opacity(0.3) : Color.white.opacity(0.1))
-                                )
-                        }
-                        .buttonStyle(.plain)
+            // Period Selector
+            HStack(spacing: 8) {
+                ForEach(periods, id: \.0) { id, label in
+                    Button(action: { onPeriodChange(id) }) {
+                        Text(label)
+                            .font(.subheadline.weight(.medium))
+                            .foregroundColor(period == id ? .white : .white.opacity(0.6))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(period == id ? Color.cyan.opacity(0.3) : Color.white.opacity(0.1))
+                            )
                     }
+                    .buttonStyle(.plain)
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
@@ -163,12 +260,12 @@ struct GlassCard: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(.ultraThinMaterial)
                     .opacity(0.8)
             )
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 16)
                     .fill(
                         LinearGradient(
                             colors: [Color.white.opacity(0.1), Color.white.opacity(0.05)],
@@ -178,7 +275,7 @@ struct GlassCard: ViewModifier {
                     )
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 16)
                     .stroke(
                         LinearGradient(
                             colors: [Color.white.opacity(0.3), Color.white.opacity(0.1)],
@@ -188,7 +285,7 @@ struct GlassCard: ViewModifier {
                         lineWidth: 1
                     )
             )
-            .shadow(color: glowColor.opacity(0.2), radius: 20, x: 0, y: 10)
+            .shadow(color: glowColor.opacity(0.2), radius: 15, x: 0, y: 8)
     }
 }
 
@@ -206,7 +303,7 @@ struct TopAppsCard: View {
     private let appColors: [Color] = [.cyan, .purple, .pink, .orange, .green, .yellow, .blue, .red, .mint, .indigo]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "chart.pie.fill")
                     .foregroundColor(.cyan)
@@ -218,28 +315,30 @@ struct TopAppsCard: View {
             let totalSeconds = apps.reduce(0) { $0 + $1.totalSeconds }
 
             ForEach(Array(apps.prefix(5).enumerated()), id: \.element.id) { index, app in
-                HStack(spacing: 12) {
+                HStack(spacing: 10) {
                     Circle()
                         .fill(appColors[index % appColors.count])
-                        .frame(width: 12, height: 12)
-                        .shadow(color: appColors[index % appColors.count].opacity(0.5), radius: 4)
+                        .frame(width: 10, height: 10)
+                        .shadow(color: appColors[index % appColors.count].opacity(0.5), radius: 3)
 
                     Text(app.appName)
                         .foregroundColor(.white)
+                        .font(.subheadline)
+                        .lineLimit(1)
 
                     Spacer()
 
                     Text(app.formattedTime)
                         .foregroundColor(.white.opacity(0.7))
-                        .font(.subheadline)
+                        .font(.caption)
 
                     // Progress bar
                     let percentage = totalSeconds > 0 ? Double(app.totalSeconds) / Double(totalSeconds) : 0
                     GeometryReader { geo in
-                        RoundedRectangle(cornerRadius: 4)
+                        RoundedRectangle(cornerRadius: 3)
                             .fill(Color.white.opacity(0.1))
                             .overlay(alignment: .leading) {
-                                RoundedRectangle(cornerRadius: 4)
+                                RoundedRectangle(cornerRadius: 3)
                                     .fill(
                                         LinearGradient(
                                             colors: [appColors[index % appColors.count], appColors[index % appColors.count].opacity(0.5)],
@@ -250,16 +349,16 @@ struct TopAppsCard: View {
                                     .frame(width: geo.size.width * percentage)
                             }
                     }
-                    .frame(width: 80, height: 8)
+                    .frame(width: 60, height: 6)
 
                     Text("\(Int(percentage * 100))%")
-                        .font(.caption)
+                        .font(.caption2)
                         .foregroundColor(.white.opacity(0.5))
-                        .frame(width: 35, alignment: .trailing)
+                        .frame(width: 30, alignment: .trailing)
                 }
             }
         }
-        .padding(20)
+        .padding(16)
         .glassCard(glowColor: .purple)
     }
 }
@@ -274,18 +373,18 @@ struct MemberStatsCard: View {
     private let appColors: [Color] = [.cyan, .purple, .pink, .orange, .green, .yellow, .blue, .red]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
             // Header
-            HStack(spacing: 12) {
+            HStack(spacing: 10) {
                 // Avatar with glow
                 ZStack {
                     Circle()
                         .fill(
                             LinearGradient(colors: [.cyan, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
-                        .frame(width: 50, height: 50)
-                        .blur(radius: 10)
-                        .opacity(0.5)
+                        .frame(width: 40, height: 40)
+                        .blur(radius: 8)
+                        .opacity(0.4)
 
                     AsyncImage(url: URL(string: "https://loder.kedicode.cloud/api/v1/users/\(member.userId)/avatar")) { image in
                         image
@@ -295,25 +394,25 @@ struct MemberStatsCard: View {
                         Image(systemName: "person.fill")
                             .foregroundColor(.white)
                     }
-                    .frame(width: 44, height: 44)
+                    .frame(width: 36, height: 36)
                     .clipShape(Circle())
                 }
 
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: 4) {
                         Text(isCurrentUser ? "You" : "Teammate")
-                            .font(.headline)
+                            .font(.subheadline.weight(.medium))
                             .foregroundColor(.white)
 
                         if isCurrentUser {
                             Text("(you)")
-                                .font(.caption)
+                                .font(.caption2)
                                 .foregroundColor(.cyan)
                         }
                     }
 
                     Text(member.formattedTime)
-                        .font(.title2.weight(.bold))
+                        .font(.title3.weight(.bold))
                         .foregroundStyle(
                             LinearGradient(colors: [.cyan, .purple], startPoint: .leading, endPoint: .trailing)
                         )
@@ -324,44 +423,45 @@ struct MemberStatsCard: View {
                 // Percentage of room activity
                 if totalRoomSeconds > 0 {
                     let percentage = Double(member.totalSeconds) / Double(totalRoomSeconds) * 100
-                    VStack(alignment: .trailing) {
+                    VStack(alignment: .trailing, spacing: 2) {
                         Text("\(Int(percentage))%")
-                            .font(.title3.weight(.bold))
+                            .font(.headline)
                             .foregroundColor(.cyan)
                         Text("of room")
-                            .font(.caption)
+                            .font(.caption2)
                             .foregroundColor(.white.opacity(0.5))
                     }
                 }
             }
 
-            // Apps breakdown
+            // Apps breakdown (compact)
             if !member.apps.isEmpty {
                 Divider()
                     .background(Color.white.opacity(0.2))
 
-                VStack(spacing: 8) {
-                    ForEach(Array(member.apps.prefix(4).enumerated()), id: \.element.id) { index, app in
-                        HStack {
+                HStack(spacing: 12) {
+                    ForEach(Array(member.apps.prefix(3).enumerated()), id: \.element.id) { index, app in
+                        HStack(spacing: 4) {
                             Circle()
                                 .fill(appColors[index % appColors.count])
-                                .frame(width: 8, height: 8)
+                                .frame(width: 6, height: 6)
 
                             Text(app.appName)
-                                .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.8))
-
-                            Spacer()
-
-                            Text(app.formattedTime)
-                                .font(.subheadline)
-                                .foregroundColor(.white.opacity(0.6))
+                                .font(.caption)
+                                .foregroundColor(.white.opacity(0.7))
+                                .lineLimit(1)
                         }
+                    }
+
+                    if member.apps.count > 3 {
+                        Text("+\(member.apps.count - 3)")
+                            .font(.caption)
+                            .foregroundColor(.white.opacity(0.5))
                     }
                 }
             }
         }
-        .padding(20)
+        .padding(14)
         .glassCard(glowColor: isCurrentUser ? .cyan : .purple)
     }
 }
@@ -437,7 +537,7 @@ struct ActivityTimelineCard: View {
                     }
                 }
             }
-            .frame(height: 200)
+            .frame(height: 180)
 
             // Legend
             HStack(spacing: 16) {
@@ -453,7 +553,7 @@ struct ActivityTimelineCard: View {
                 }
             }
         }
-        .padding(20)
+        .padding(16)
         .glassCard(glowColor: .cyan)
     }
 }
@@ -502,8 +602,8 @@ class StatisticsWindowController: NSObject {
         let contentView = StatisticsWindow(roomId: roomId)
 
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 600, height: 700),
-            styleMask: [.titled, .closable, .resizable, .miniaturizable],
+            contentRect: NSRect(x: 0, y: 0, width: 1000, height: 550),
+            styleMask: [.borderless, .resizable],
             backing: .buffered,
             defer: false
         )
@@ -514,15 +614,36 @@ class StatisticsWindowController: NSObject {
         window.setFrameAutosaveName("StatisticsWindow")
         window.isReleasedWhenClosed = false
         window.delegate = self
+        window.isMovableByWindowBackground = true
+        window.backgroundColor = .clear
+        window.hasShadow = true
+        window.minSize = NSSize(width: 800, height: 450)
+
+        // Round corners
+        window.contentView?.wantsLayer = true
+        window.contentView?.layer?.cornerRadius = 12
+        window.contentView?.layer?.masksToBounds = true
+
+        // Show in dock
+        NSApp.setActivationPolicy(.regular)
 
         self.window = window
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+    }
+
+    func close() {
+        window?.close()
     }
 }
 
 extension StatisticsWindowController: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         window = nil
+
+        // Hide from dock if no other windows
+        if NSApp.windows.filter({ $0.isVisible && $0 != notification.object as? NSWindow }).isEmpty {
+            NSApp.setActivationPolicy(.accessory)
+        }
     }
 }

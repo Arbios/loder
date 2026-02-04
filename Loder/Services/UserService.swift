@@ -21,4 +21,16 @@ class UserService {
         }
         return try await api.uploadAvatar(userId: userId, imageData: imageData)
     }
+
+    func deleteAccount(userId: String) async throws {
+        let _: DeleteAccountResponse = try await api.request(
+            endpoint: "/users/\(userId)",
+            method: "DELETE",
+            body: nil
+        )
+    }
+}
+
+struct DeleteAccountResponse: Codable {
+    let message: String
 }
