@@ -124,8 +124,8 @@ struct RoomView: View {
     }
 
     private func openStatistics() {
-        guard let roomId = appState.currentRoom?.id else { return }
-        StatisticsWindowController.shared.showStatistics(for: roomId)
+        // Post notification to open main window
+        NotificationCenter.default.post(name: NSNotification.Name("OpenMainWindow"), object: nil)
     }
 }
 

@@ -282,14 +282,26 @@ def get_room_stats(room_id):
     else:
         start_time = datetime(2000, 1, 1)  # All time
 
-    # Get all members
+    # Get all members with online status
+    threshold = now - timedelta(seconds=OFFLINE_THRESHOLD_SECONDS)
     cursor.execute('''
-        SELECT u.id, u.avatar_path
+        SELECT u.id, u.avatar_path, u.name, u.email, rm.active_app, rm.last_seen
         FROM room_members rm
         JOIN users u ON rm.user_id = u.id
         WHERE rm.room_id = ?
     ''', (room_id,))
-    members = {row['id']: {'userId': row['id'], 'avatarPath': row['avatar_path']} for row in cursor.fetchall()}
+    members = {}
+    for row in cursor.fetchall():
+        last_seen = datetime.fromisoformat(row['last_seen']) if row['last_seen'] else None
+        is_online = bool(last_seen and last_seen > threshold)
+        members[row['id']] = {
+            'userId': row['id'],
+            'avatarPath': row['avatar_path'],
+            'name': row['name'],
+            'email': row['email'],
+            'isOnline': is_online,
+            'currentApp': row['active_app'] if is_online else None
+        }
 
     # Get total time per user
     cursor.execute('''

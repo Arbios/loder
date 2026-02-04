@@ -2,66 +2,86 @@ import SwiftUI
 
 struct RegistrationView: View {
     @ObservedObject var appState = AppState.shared
-    @State private var isRegistering = false
+    @State private var isSigningIn = false
     @State private var errorMessage: String?
 
     var body: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "key.fill")
-                .font(.system(size: 40))
-                .foregroundColor(.secondary)
+        VStack(spacing: 20) {
+            Spacer()
+
+            // Logo
+            Image(systemName: "person.3.fill")
+                .font(.system(size: 50))
+                .foregroundColor(.accentColor)
 
             Text("Welcome to Loder")
-                .font(.headline)
+                .font(.title2)
+                .fontWeight(.semibold)
 
-            Text("Connect with your team and see Claude activity in real-time.")
+            Text("See what your team is working on in real-time")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
+            Spacer()
+
             if let error = errorMessage {
                 Text(error)
                     .font(.caption)
                     .foregroundColor(.red)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
             }
 
-            Button(action: register) {
-                if isRegistering {
-                    ProgressView()
-                        .scaleEffect(0.8)
-                        .frame(width: 100)
-                } else {
-                    Text("Get Started")
-                        .frame(width: 100)
+            // Google Sign-In Button
+            Button(action: signInWithGoogle) {
+                HStack(spacing: 12) {
+                    if isSigningIn {
+                        ProgressView()
+                            .scaleEffect(0.8)
+                    } else {
+                        Image(systemName: "g.circle.fill")
+                            .font(.title2)
+                        Text("Sign in with Google")
+                            .fontWeight(.medium)
+                    }
                 }
+                .frame(maxWidth: .infinity)
+                .frame(height: 44)
             }
             .buttonStyle(.borderedProminent)
-            .disabled(isRegistering)
+            .disabled(isSigningIn)
+            .padding(.horizontal, 24)
+
+            Spacer()
+                .frame(height: 20)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
-        .onAppear {
-            // Auto-register on appear
-            register()
-        }
     }
 
-    private func register() {
-        guard !isRegistering else { return }
-        isRegistering = true
+    private func signInWithGoogle() {
+        guard !isSigningIn else { return }
+        isSigningIn = true
         errorMessage = nil
 
         Task {
             do {
-                let user = try await UserService.shared.register()
+                let response = try await GoogleAuthService.shared.signIn()
+                let user = User(from: response)
                 await MainActor.run {
                     appState.setUser(user)
-                    isRegistering = false
+                    isSigningIn = false
+                }
+            } catch GoogleAuthError.cancelled {
+                await MainActor.run {
+                    isSigningIn = false
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = "Registration failed. Tap to retry."
-                    isRegistering = false
+                    errorMessage = error.localizedDescription
+                    isSigningIn = false
                 }
             }
         }

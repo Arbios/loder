@@ -28,8 +28,8 @@
 		B100001F211E00001 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000020211E00001 /* AvatarView.swift */; };
 		B1000021211E00001 /* AvatarStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000022211E00001 /* AvatarStackView.swift */; };
 		C1000001211E00001 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000002211E00001 /* Statistics.swift */; };
-		C1000003211E00001 /* StatisticsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1000004211E00001 /* StatisticsWindow.swift */; };
-		D1000001211E00001 /* SettingsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1000002211E00001 /* SettingsWindow.swift */; };
+		E1000001211E00001 /* GoogleAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000002211E00001 /* GoogleAuthService.swift */; };
+		E1000003211E00001 /* MainWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1000004211E00001 /* MainWindowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,8 +56,8 @@
 		B1000020211E00001 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		B1000022211E00001 /* AvatarStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStackView.swift; sourceTree = "<group>"; };
 		C1000002211E00001 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
-		C1000004211E00001 /* StatisticsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsWindow.swift; sourceTree = "<group>"; };
-		D1000002211E00001 /* SettingsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindow.swift; sourceTree = "<group>"; };
+		E1000002211E00001 /* GoogleAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAuthService.swift; sourceTree = "<group>"; };
+		E1000004211E00001 /* MainWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +120,7 @@
 				B100000A211E00001 /* UserService.swift */,
 				B100000C211E00001 /* RoomService.swift */,
 				B100000E211E00001 /* HeartbeatService.swift */,
+				E1000002211E00001 /* GoogleAuthService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -134,8 +135,7 @@
 				B100001E211E00001 /* AvatarUploadView.swift */,
 				B1000020211E00001 /* AvatarView.swift */,
 				B1000022211E00001 /* AvatarStackView.swift */,
-				C1000004211E00001 /* StatisticsWindow.swift */,
-				D1000002211E00001 /* SettingsWindow.swift */,
+				E1000004211E00001 /* MainWindowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,8 +239,8 @@
 				B100001F211E00001 /* AvatarView.swift in Sources */,
 				B1000021211E00001 /* AvatarStackView.swift in Sources */,
 				C1000001211E00001 /* Statistics.swift in Sources */,
-				C1000003211E00001 /* StatisticsWindow.swift in Sources */,
-				D1000001211E00001 /* SettingsWindow.swift in Sources */,
+				E1000001211E00001 /* GoogleAuthService.swift in Sources */,
+				E1000003211E00001 /* MainWindowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

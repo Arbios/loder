@@ -24,10 +24,12 @@ class AppState: ObservableObject {
     }
 
     private func loadStoredUser() {
-        if let userId = UserDefaults.standard.string(forKey: "com.loder.userId"),
-           let deviceId = UserDefaults.standard.string(forKey: "com.loder.deviceId") {
+        if let userId = UserDefaults.standard.string(forKey: "com.loder.userId") {
+            let email = UserDefaults.standard.string(forKey: "com.loder.email")
+            let name = UserDefaults.standard.string(forKey: "com.loder.name")
+            let deviceId = UserDefaults.standard.string(forKey: "com.loder.deviceId")
             let avatarPath = UserDefaults.standard.string(forKey: "com.loder.avatarPath")
-            self.currentUser = User(id: userId, deviceId: deviceId, avatarPath: avatarPath, isNew: false)
+            self.currentUser = User(id: userId, deviceId: deviceId, email: email, name: name, avatarPath: avatarPath, isNew: false)
             self.status = .lobby
             self.focusMode = UserDefaults.standard.bool(forKey: "com.loder.focusMode")
 
@@ -43,7 +45,15 @@ class AppState: ObservableObject {
     func setUser(_ user: User) {
         self.currentUser = user
         UserDefaults.standard.set(user.id, forKey: "com.loder.userId")
-        UserDefaults.standard.set(user.deviceId, forKey: "com.loder.deviceId")
+        if let deviceId = user.deviceId {
+            UserDefaults.standard.set(deviceId, forKey: "com.loder.deviceId")
+        }
+        if let email = user.email {
+            UserDefaults.standard.set(email, forKey: "com.loder.email")
+        }
+        if let name = user.name {
+            UserDefaults.standard.set(name, forKey: "com.loder.name")
+        }
         if let avatarPath = user.avatarPath {
             UserDefaults.standard.set(avatarPath, forKey: "com.loder.avatarPath")
         }
@@ -83,6 +93,8 @@ class AppState: ObservableObject {
         focusMode = false
         UserDefaults.standard.removeObject(forKey: "com.loder.userId")
         UserDefaults.standard.removeObject(forKey: "com.loder.deviceId")
+        UserDefaults.standard.removeObject(forKey: "com.loder.email")
+        UserDefaults.standard.removeObject(forKey: "com.loder.name")
         UserDefaults.standard.removeObject(forKey: "com.loder.avatarPath")
         UserDefaults.standard.removeObject(forKey: "com.loder.roomId")
         UserDefaults.standard.removeObject(forKey: "com.loder.focusMode")

@@ -5,6 +5,7 @@ from database import init_db, get_db
 from config import AVATARS_DIR
 from routes.users import users_bp
 from routes.rooms import rooms_bp
+from routes.auth import auth_bp
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -19,6 +20,7 @@ init_db()
 # Register blueprints
 app.register_blueprint(users_bp, url_prefix='/api/v1/users')
 app.register_blueprint(rooms_bp, url_prefix='/api/v1/rooms')
+app.register_blueprint(auth_bp, url_prefix='/api/v1/auth')
 
 @app.route('/api/v1/health')
 def health():

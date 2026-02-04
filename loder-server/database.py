@@ -13,11 +13,24 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id TEXT PRIMARY KEY,
-            device_id TEXT UNIQUE NOT NULL,
+            device_id TEXT UNIQUE,
+            email TEXT UNIQUE,
+            name TEXT,
             avatar_path TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
+
+    # Add email and name columns if they don't exist (migration for existing DBs)
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN email TEXT UNIQUE')
+    except:
+        pass  # Column already exists
+
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN name TEXT')
+    except:
+        pass  # Column already exists
 
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS rooms (
