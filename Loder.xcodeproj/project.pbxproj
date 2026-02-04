@@ -9,13 +9,49 @@
 /* Begin PBXBuildFile section */
 		A1000001211E00001 /* LoderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002211E00001 /* LoderApp.swift */; };
 		A1000003211E00001 /* ClaudeActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004211E00001 /* ClaudeActivityMonitor.swift */; };
+		A1000014211E00001 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 842F5AFF2F32A55A0075EE5F /* Media.xcassets */; };
+		B1000001211E00001 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000002211E00001 /* User.swift */; };
+		B1000003211E00001 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000004211E00001 /* Room.swift */; };
+		B1000005211E00001 /* Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000006211E00001 /* Participant.swift */; };
+		B1000007211E00001 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000008211E00001 /* APIClient.swift */; };
+		B1000009211E00001 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000A211E00001 /* UserService.swift */; };
+		B100000B211E00001 /* RoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000C211E00001 /* RoomService.swift */; };
+		B100000D211E00001 /* HeartbeatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100000E211E00001 /* HeartbeatService.swift */; };
+		B100000F211E00001 /* DeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000010211E00001 /* DeviceIdentifier.swift */; };
+		B1000011211E00001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000012211E00001 /* AppState.swift */; };
+		B1000013211E00001 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000014211E00001 /* ImageCache.swift */; };
+		B1000015211E00001 /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000016211E00001 /* PopoverContentView.swift */; };
+		B1000017211E00001 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000018211E00001 /* RegistrationView.swift */; };
+		B1000019211E00001 /* LobbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100001A211E00001 /* LobbyView.swift */; };
+		B100001B211E00001 /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100001C211E00001 /* RoomView.swift */; };
+		B100001D211E00001 /* AvatarUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B100001E211E00001 /* AvatarUploadView.swift */; };
+		B100001F211E00001 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000020211E00001 /* AvatarView.swift */; };
+		B1000021211E00001 /* AvatarStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1000022211E00001 /* AvatarStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		842F5AFF2F32A55A0075EE5F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		A1000002211E00001 /* LoderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoderApp.swift; sourceTree = "<group>"; };
 		A1000004211E00001 /* ClaudeActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeActivityMonitor.swift; sourceTree = "<group>"; };
 		A1000005211E00001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000006211E00001 /* Loder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Loder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1000002211E00001 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B1000004211E00001 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		B1000006211E00001 /* Participant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Participant.swift; sourceTree = "<group>"; };
+		B1000008211E00001 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		B100000A211E00001 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		B100000C211E00001 /* RoomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomService.swift; sourceTree = "<group>"; };
+		B100000E211E00001 /* HeartbeatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatService.swift; sourceTree = "<group>"; };
+		B1000010211E00001 /* DeviceIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentifier.swift; sourceTree = "<group>"; };
+		B1000012211E00001 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		B1000014211E00001 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		B1000016211E00001 /* PopoverContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverContentView.swift; sourceTree = "<group>"; };
+		B1000018211E00001 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		B100001A211E00001 /* LobbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyView.swift; sourceTree = "<group>"; };
+		B100001C211E00001 /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
+		B100001E211E00001 /* AvatarUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarUploadView.swift; sourceTree = "<group>"; };
+		B1000020211E00001 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		B1000022211E00001 /* AvatarStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +78,12 @@
 			children = (
 				A1000002211E00001 /* LoderApp.swift */,
 				A1000004211E00001 /* ClaudeActivityMonitor.swift */,
+				B1000023211E00001 /* Models */,
+				B1000024211E00001 /* Services */,
+				B1000025211E00001 /* Views */,
+				B1000026211E00001 /* Utilities */,
 				A1000005211E00001 /* Info.plist */,
+				842F5AFF2F32A55A0075EE5F /* Media.xcassets */,
 			);
 			path = Loder;
 			sourceTree = "<group>";
@@ -55,6 +96,51 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		B1000023211E00001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B1000002211E00001 /* User.swift */,
+				B1000004211E00001 /* Room.swift */,
+				B1000006211E00001 /* Participant.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B1000024211E00001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B1000008211E00001 /* APIClient.swift */,
+				B100000A211E00001 /* UserService.swift */,
+				B100000C211E00001 /* RoomService.swift */,
+				B100000E211E00001 /* HeartbeatService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B1000025211E00001 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B1000016211E00001 /* PopoverContentView.swift */,
+				B1000018211E00001 /* RegistrationView.swift */,
+				B100001A211E00001 /* LobbyView.swift */,
+				B100001C211E00001 /* RoomView.swift */,
+				B100001E211E00001 /* AvatarUploadView.swift */,
+				B1000020211E00001 /* AvatarView.swift */,
+				B1000022211E00001 /* AvatarStackView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B1000026211E00001 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B1000010211E00001 /* DeviceIdentifier.swift */,
+				B1000012211E00001 /* AppState.swift */,
+				B1000014211E00001 /* ImageCache.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -64,6 +150,7 @@
 			buildPhases = (
 				A100000D211E00001 /* Sources */,
 				A1000007211E00001 /* Frameworks */,
+				A1000015211E00001 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -107,6 +194,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		A1000015211E00001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000014211E00001 /* Media.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A100000D211E00001 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -114,6 +212,23 @@
 			files = (
 				A1000001211E00001 /* LoderApp.swift in Sources */,
 				A1000003211E00001 /* ClaudeActivityMonitor.swift in Sources */,
+				B1000001211E00001 /* User.swift in Sources */,
+				B1000003211E00001 /* Room.swift in Sources */,
+				B1000005211E00001 /* Participant.swift in Sources */,
+				B1000007211E00001 /* APIClient.swift in Sources */,
+				B1000009211E00001 /* UserService.swift in Sources */,
+				B100000B211E00001 /* RoomService.swift in Sources */,
+				B100000D211E00001 /* HeartbeatService.swift in Sources */,
+				B100000F211E00001 /* DeviceIdentifier.swift in Sources */,
+				B1000011211E00001 /* AppState.swift in Sources */,
+				B1000013211E00001 /* ImageCache.swift in Sources */,
+				B1000015211E00001 /* PopoverContentView.swift in Sources */,
+				B1000017211E00001 /* RegistrationView.swift in Sources */,
+				B1000019211E00001 /* LobbyView.swift in Sources */,
+				B100001B211E00001 /* RoomView.swift in Sources */,
+				B100001D211E00001 /* AvatarUploadView.swift in Sources */,
+				B100001F211E00001 /* AvatarView.swift in Sources */,
+				B1000021211E00001 /* AvatarStackView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +359,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6355K3CJ5C;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Loder/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -253,7 +369,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.loder.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kedicode.loder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -268,6 +384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6355K3CJ5C;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Loder/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -277,7 +394,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.loder.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kedicode.loder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -306,7 +423,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = A100000E211E00001 /* Project object */;
 }

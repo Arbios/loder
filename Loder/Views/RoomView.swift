@@ -154,9 +154,15 @@ struct ParticipantRow: View {
                 }
 
                 if participant.isOnline {
-                    Text(participant.isActive ? "Claude is active" : "Idle")
-                        .font(.caption)
-                        .foregroundColor(participant.isActive ? .green : .secondary)
+                    if let app = participant.activeApp {
+                        Text(app)
+                            .font(.caption)
+                            .foregroundColor(.green)
+                    } else {
+                        Text("Idle")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
             }
 
